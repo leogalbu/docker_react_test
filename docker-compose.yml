@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    build:
+      context: . # quello che voglio, prendi tutta la current directory che contiene il progetto
+      dockerfile: Dockerfile.dev # controlla la cartella corrente e cerca questo file
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules  # Reference a lla cartella node_modules nel container
+      - .:/app # Mappa la cartella corrente fuori dal container dentro al container
+  tests: # servizio che serve solo per eseguire i test
+    build:
+      context: . # quello che voglio, prendi tutta la current directory che contiene il progetto
+      dockerfile: Dockerfile.dev # controlla la cartella corrente e cerca questo file
+    volumes:
+      - /app/node_modules  # Reference a lla cartella node_modules nel container
+      - .:/app # Mappa la cartella corrente fuori dal container dentro al container
+    command: ["npm", "run", "test"] # specifico il comando da eseguire
